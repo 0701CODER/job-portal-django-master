@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+<legend class="mb-4">Requests sent for your ads</legend>
+<table class="table table-sm" style="text-align: center;">
+    <thead>
+        <tr>
+            <th scope="col">user</th>
+            <th scope="col">Advertisement</th>
+            <th scope="col">Resume</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    {% for request in requests %}
+    <tbody>
+      <tr>
+        <td>{{ request.jobseeker }}</td>
+        <td><a href="{% url 'job-detail' request.job.id%}"> {{ request.job }}</a></td>
+        <td><a class="btn btn-outline-info" style="padding:2px;font-size:15px;" 
+          target="_blank" href="{{ request.resume_url }}">Observation</a>
+        </td>
+        <td style="float: left;">
+          <a class="btn btn-success" style="padding:2px;font-size:15px;"
+           href="{% url 'accept-status' request.id %}"> Approval</a>
+          <a class="btn btn-danger" style="padding:2px;font-size:15px;"
+           href="{% url 'delete-request' request.id %}">delete</a>
+        </td> 
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+<div class="content-section">
+  <legend class="mb-4">Approved resumes</legend>
+  <table class="table table-sm">
+    <thead>
+        <tr>
+            <th scope="col">user</th>
+            <th scope="col">Advertisement</th>
+            <th scope="col">Resume</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for request in accepted_requests %}
+      <tr>
+        <td>{{ request.jobseeker }}</td>
+        <td><a href=""> </a>{{ request.job }}</td>
+        <td><a target="_blank" href="#">View</a></td>
+        <td>
+          <a  class="btn btn-danger" style="padding: 1px;font-size:12px;"
+           href="{% url 'delete-request' request.id %}">Delete</a>
+        </td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
